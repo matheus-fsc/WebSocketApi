@@ -1,17 +1,20 @@
+const https = require('https');
+const fs = require('fs');
 const express = require('express');
-const http = require('http');
 const WebSocket = require('ws');
 
 const app = express();
 
-// Servir arquivos estáticos da pasta 'public'
-app.use(express.static('public'));
+// Carregar os certificados SSL
+const server = https.createServer({
+  cert: fs.readFileSync('path/to/cert.pem'),
+  key: fs.readFileSync('path/to/key.pem')
+}, app);
 
-// Criar o servidor HTTP
-const server = http.createServer(app);
-
-// Configurar o WebSocket Server para usar o mesmo servidor HTTP
+// Configurar o WebSocket Server para usar o servidor HTTPS
 const wss = new WebSocket.Server({ server });
+
+app.use(express.static('public'));
 
 // Armazenar os jogadores conectados
 let players = {};
@@ -67,8 +70,8 @@ wss.on('connection', (ws, req) => {
     });
 });
 
-// Iniciar o servidor HTTP e WebSocket
+// Iniciar o servidor HTTPS e WebSocket Secure
 const PORT = 15621;
 server.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
+    console.log(`Servidor seguro rodando em https://localhost:${PORT}`);
 });
