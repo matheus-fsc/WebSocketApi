@@ -7,8 +7,8 @@ const app = express();
 
 // Carregar os certificados SSL
 const server = https.createServer({
-  cert: fs.readFileSync('path/to/cert.pem'),
-  key: fs.readFileSync('path/to/key.pem')
+  cert: fs.readFileSync('./cert.pem'),
+  key: fs.readFileSync('./key.pem')
 }, app);
 
 // Configurar o WebSocket Server para usar o servidor HTTPS
