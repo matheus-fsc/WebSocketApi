@@ -75,25 +75,3 @@ const PORT = 15621;
 server.listen(PORT, () => {
     console.log(`Servidor seguro rodando em https://localhost:${PORT}`);
 });
-
-
-const wsUrl = new URL('wss://yourserver.com');
-const ws = new WebSocket(wsUrl);
-
-// Resto do código do cliente...
-ws.onopen = () => {
-    console.log('Conectado ao servidor WebSocket seguro');
-};
-
-ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    // Lógica para lidar com as mensagens recebidas
-};
-
-ws.onclose = () => {
-    console.log('Desconectado do servidor WebSocket');
-};
-
-ws.onerror = (error) => {
-    console.error('Erro no WebSocket:', error);
-};
